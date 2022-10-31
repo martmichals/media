@@ -133,3 +133,24 @@ class TokenizationExampleWithPunc(Scene):
         # Highlight the good portion of the sentence
         self.play(sent_split.animate.set_color(GREEN))
 
+class GraphScene(Scene):
+    def construct(self):
+        # Initialize the bar chart
+        top_bound = 21
+        chart = BarChart(
+            values=[float(f'{i:.2}') for i in [1/v for v in range(1, top_bound)]],
+            bar_names=[f'{i}' for i in range(1, top_bound)],
+            y_range=[0, 1, 0.1],
+            y_length=6,
+            x_length=10,
+            x_axis_config={"font_size": 36},
+        )
+        c_bar_lbls = chart.get_bar_labels(font_size=15)
+        title = Text('Zipfian Bar Chart', font_size=30, font='Montserrat')
+        self.wait()
+
+        # Draw in the bar chart
+        self.play(Write(title))
+        self.play(Create(chart), title.animate.to_edge(UP))
+        self.play(Write(c_bar_lbls))
+        self.wait()
